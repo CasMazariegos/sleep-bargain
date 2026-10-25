@@ -83,6 +83,31 @@ export const LINES = {
       'Not {ask}! I can scrape together {min} minutes, and you {quest}. Then we sprint to {leave}!',
     ],
   },
+
+  final: {
+    final: [
+      'FINAL OFFER. Snooze {count}. I am down to {min} minutes and you {quest}. Take it or rise. 😤',
+      'This is it. The last bargain in the history of mornings: {min} minutes, and you {quest}. No more after this!',
+      'Snooze {count}?! My final, absolutely final, I-mean-it offer: {min} minutes. Condition: {quest}. Then UP.',
+      'Listen closely, because I won\'t say it again. {min} minutes. You {quest}. After that the bed is lava. 🌋',
+      'Last crumb on the table: {min} minutes, and you {quest}. You leave at {leave}. Choose wisely.',
+      'Meep\'s final offer, sealed in glitter: {min} minutes, and you {quest}. There is no snooze {count}+1.',
+    ],
+  },
+  refuse: {
+    denied: [
+      'Nope. "{excuse}" doesn\'t get a single minute. Zero. Up you get. ☀️',
+      'Absolutely not. You already used that energy. Zero minutes. Feet. On. Floor.',
+      '"{excuse}"? Denied. Stamped. Filed. Zero minutes, sleepyhead.',
+      'Snooze {count}? We are DONE negotiating. Zero minutes. I\'m ringing again. 🔔',
+      'The bargaining table is closed. Zero minutes. You leave at {leave}!',
+      'I gave you chances. So many chances. Zero minutes now. UP. 😤',
+      'No more deals. The ledger says you owe me a morning. Zero minutes.',
+      'Hard no. Even my snooze button is tired of you. Zero minutes. Rise!',
+      'Not happening, superstar. Zero minutes. Go drink some water and be a person.',
+      'Meep has left the chat... just kidding, Meep is LOUDER now. Zero minutes!',
+    ],
+  },
   holding: [
     'Nice try. My offer stays at {min} minutes. Accept it or get up. 🙃',
     'I don\'t haggle twice, sweetie. {min} minutes. That\'s the deal.',
@@ -114,18 +139,43 @@ export const LINES = {
   ],
 };
 
+const OPENERS = ['Hmm.', 'Okay, listen.', 'Babe.', 'Ahem.', 'Wow.', 'Oh honey.', 'Right.', 'Real talk:', 'Fun fact:', 'Breaking news:', 'Sigh.', 'Plot twist:'];
+const used = new Set();
+export function resetUsed() { used.clear(); }
+
 export function fillSlots(tpl, slots) {
   return tpl.replace(/\{(\w+)\}/g, (m, k) => (slots[k] !== undefined && slots[k] !== null ? String(slots[k]) : m));
 }
 
-/** Pick a line by mood + verdict (or a flat key) with a seed, then fill slots. */
+function pool(mood, verdict, key) {
+  if (key) return [LINES[key] ?? LINES.accepted];
+  const own = LINES[mood]?.[verdict];
+  const shared = verdict === 'denied' ? [LINES.refuse.denied, LINES.dramatic.denied]
+    : verdict === 'final' ? [LINES.final.final]
+    : Object.values(LINES).filter((v) => !Array.isArray(v) && v[verdict]).map((v) => v[verdict]);
+  return [own, ...shared].filter(Boolean);
+}
+
+/** Pick a line by mood + verdict (or a flat key), never repeating a line this session. */
 export function fallbackLine({ mood, verdict, key, slots, seed = 0 }) {
-  let bank = key ? LINES[key] : LINES[mood]?.[verdict];
-  if (!bank) bank = verdict === 'denied' ? LINES.dramatic.denied : LINES.sassy[verdict] ?? LINES.accepted;
-  const tpl = bank[Math.abs(Math.floor(seed)) % bank.length];
   const s = { ...slots };
   if (s.excuse) s.excuse = String(s.excuse).slice(0, 60);
-  return fillSlots(tpl, s).replace(/\b1 minutes\b/g, '1 minute');
+  const fill = (t) => fillSlots(t, s).replace(/\b1 minutes\b/g, '1 minute');
+  const banks = pool(mood, verdict, key);
+  for (const bank of banks) {
+    for (let i = 0; i < bank.length; i++) {
+      const tpl = bank[(Math.abs(Math.floor(seed)) + i) % bank.length];
+      const line = fill(tpl);
+      if (!used.has(line)) { used.add(line); return line; }
+    }
+  }
+  // Everything used: remix with an opener so wording still varies.
+  for (let n = 0; n < 200; n++) {
+    const bank = banks[n % banks.length];
+    const line = `${OPENERS[(Math.floor(seed) + n) % OPENERS.length]} ${fill(bank[(Math.floor(seed) + n) % bank.length])}`;
+    if (!used.has(line)) { used.add(line); return line; }
+  }
+  return fill(banks[0][0]);
 }
 
 export function lineCount() {

@@ -72,3 +72,13 @@ export function scoreExcuse(text) {
 export function ledgerTotals(entries) {
   return entries.reduce((a, e) => ({ won: a.won + e.granted, lost: a.lost + Math.max(0, e.requested - e.granted) }), { won: 0, lost: 0 });
 }
+
+/**
+ * Keep "leave by" tied to the real alarm. If the leave time is not within 6 hours
+ * after the alarm (e.g. a stale 8:15 AM default with a 1:01 PM alarm), move it to alarm + 75 min.
+ */
+export function alignLeave(alarmMin, leaveBy, defaultGap = 75) {
+  const gap = minutesUntil(alarmMin, leaveBy);
+  if (gap > 0 && gap <= 360) return { leaveBy, moved: false };
+  return { leaveBy: (alarmMin + defaultGap) % 1440, moved: true };
+}

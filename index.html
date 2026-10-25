@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sleep Bargain</title>
 <style>
 body{font-family:system-ui,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem;background:#1b1530;color:#f4ecff}
@@ -11,19 +11,22 @@ button{background:#ff7ab6;color:#1b1530;border:none;cursor:pointer;font-weight:6
 small{opacity:.7}
 #moodbar{display:flex;gap:1rem;align-items:center;margin:.5rem 0}#mood{font-size:1.3rem;font-weight:700;text-transform:capitalize}
 #typing{color:#ffe08a;font-style:italic;margin:.3rem 0}#typing span{animation:b 1s infinite}#typing span:nth-child(2){animation-delay:.2s}#typing span:nth-child(3){animation-delay:.4s}
-@keyframes b{50%{opacity:.2}}#chips{margin:.5rem 0}#chips button{margin-right:.4rem;background:#8fe3cf}
+@keyframes b{50%{opacity:.2}}#chips{margin:.5rem 0;display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}#chips[hidden]{display:none}#chips button{background:#8fe3cf;min-height:44px;font-size:1rem}#chips button[hidden]{display:none}
+#form{display:flex;gap:.5rem;margin-top:.5rem}#excuse{flex:1;min-width:0;font-size:16px}#form button{min-height:44px}
+body.alarm{animation:flash .5s infinite alternate}@keyframes flash{to{background:#4a1530}}
+@media (max-width:480px){body{margin:1rem auto}fieldset{padding:.5rem}#chat{height:45vh}input{max-width:100%}fieldset input[size]{width:6.5rem}}
 </style></head><body>
-<h1>🐣 Sleep Bargain</h1><small>Don't snooze. Negotiate. Gemma runs on your device.</small>
+<h1>🐣 Sleep Bargain</h1><small>Don't snooze. Negotiate. Powered by open-weight Gemma.</small>
 <fieldset><legend>Your morning</legend>
 Alarm <input id="alarm" value="7:00 am" size="8"> Leave by <input id="leave" value="8:15 am" size="8"><br><br>
 Getting ready takes <input id="ready" type="number" value="35" style="width:4rem"> min · buffer <input id="buffer" type="number" value="5" style="width:4rem"> min<br><br>
 <button id="set">Set alarm</button> <button id="test">Ring now (demo)</button> <button id="up">I'm up!</button>
 <p id="status"></p></fieldset>
-<fieldset><legend>Model</legend><button id="load">Load Gemma (≈1.5 GB, once)</button> <small id="model">Not loaded: Meep uses built-in lines.</small></fieldset>
+<fieldset><legend>Brain</legend><b id="brain">Brain: ☁️ Gemma 4 (Workers AI)</b><br><label><input type="checkbox" id="brainToggle"> Run on-device instead (WebLLM, ≈1.5 GB once)</label><br><small id="model"></small></fieldset>
 <div id="moodbar">Meep is feeling: <span id="mood">🐣</span> <small id="cat"></small></div>
 <div id="chat"></div><div id="typing" hidden>Meep is typing<span>.</span><span>.</span><span>.</span></div>
 <div id="chips" hidden><button id="chipAccept">✅ Accept deal</button><button id="chipCounter">🤝 Counter</button><button id="chipReject">❌ No deal</button><button id="chipUp">☀️ Fine, I'm up</button></div>
-<form id="form"><input id="excuse" placeholder="5 more minutes, I was up late..." style="width:75%"> <button>Bargain</button></form>
+<form id="form"><input id="excuse" maxlength="200" placeholder="5 more minutes, I was up late..."> <button>Bargain</button></form>
 <fieldset><legend>Snooze ledger</legend><b id="totals"></b><ul id="ledger"></ul></fieldset>
 <script type="module" src="/src/main.js"></script>
 </body></html>

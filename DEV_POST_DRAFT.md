@@ -24,27 +24,25 @@ If you can afford it, you get it. If your excuse is "my bed is cozy," Meep count
 
 ## How I Built It
 
-It's a tiny static site: plain JavaScript, Vite, and **WebLLM** running **Gemma 2 2B** right in the browser over WebGPU. No server, no API key, no account. It's served as static assets on Cloudflare Workers.
+My first version was a pushover. I tested it on my iPhone, said "I'm sleepy" five times, and Meep said yes five times. Rude. So I rebuilt her to fight back.
 
-The most important rule: **the model never picks the number.** Plain code does the minutes. Max snooze = time until you leave − getting-ready time − a safety buffer. That logic has unit tests, because nobody should be late to work because an AI felt generous.
+**Gemma, two ways.** By default Meep's brain is **Gemma 4 on Cloudflare Workers AI**, behind a tiny Worker endpoint, so she works on any phone. If your browser has WebGPU, you can flip a toggle and run **Gemma 2 on-device with WebLLM**, so nothing leaves your laptop. The app always shows you which brain is talking.
 
-Gemma gets two jobs instead.
+**The model never picks the number.** Plain code does the minutes: time until you leave, minus getting-ready time, minus a buffer. The same tested logic runs on the server and in the browser.
 
-**Job one: judge your excuse.** Gemma sorts it into a category (tired, sick, cold, weekend-ish, lame, or creative) and returns it as tiny JSON. The code turns that into a share of your budget. Sick gets almost all of it. "My bed is comfy" gets a fifth. If Gemma's JSON comes back weird, a keyword classifier steps in.
+**Meep bargains hard.** Your first ask almost always gets a lower counteroffer and a side quest. "6 minutes if you drink a full glass of water first." Snooze two gets less. Snooze three is a stern FINAL OFFER. Snooze four? She refuses and rings again, louder. 🚨 Lame excuses get two minutes, then a flat no.
 
-**Job two: be Meep.** I gave Gemma a system prompt and a few example replies. Meep has to quote your actual excuse, mention your real leave time, and end with a clear verdict. Then a guardrail reads the reply. If Gemma mentions any minute count except the one the code decided, the reply gets tossed.
+**You have to answer.** No auto-accepting. You tap *Accept deal*, *Counter*, *No deal*, or *Fine, I'm up*. She'll meet you halfway once, then she holds the line. Turn her down and those minutes go in the ledger as *Lost*.
 
-Meep also has moods. She's generous on your first good excuse, suspicious by snooze two 🤨, fed up by snooze three 😤, and dramatic when there's no time left 😱. When you finally get up, she's triumphant 🏆.
+**Gemma does the personality.** It sorts your excuse (tired, sick, cold, weekend-ish, lame, or creative) as tiny JSON. Then it writes Meep's reply, quoting your excuse and roasting it, with your real leave time in there. A guardrail tosses any reply that mentions a different number of minutes.
 
-And you can **haggle**. Meep makes counteroffers with side quests: "I'll give you 6 if you skip the second episode of doom-scrolling." Tap *Accept deal*, *Counter*, or *Fine, I'm up*. She'll meet you halfway once. After that, she holds the line.
-
-No WebGPU? Meep still works with a bank of 70+ handwritten lines, sorted by mood and verdict, that fill in your excuse and your times. It's fun either way.
+Here's real Gemma, live: I typed "I'm sleepy" and Meep said: *"'I'm sleepy' is the most unoriginal thing I've ever heard. I'll give you 2 minutes if you promise to drink a full glass of water first."* Finally, some backbone.
 
 ## Why Does Open Innovation Matter?
 
 An alarm lives in your bedroom. It hears your excuses at your sleepiest. That should stay on *your* device.
 
-Because Gemma is open-weight and WebLLM is open source, Meep runs locally, works without sending a thing to a server, and costs nothing to use. Anyone can fork it, change Meep's personality, or swap in a different open model. Open tools let a small, silly idea like this exist without a cloud bill.
+Because Gemma is open-weight, the same model family runs in two places: in the cloud on Workers AI for phones, and fully on-device through open-source WebLLM for anyone who'd rather keep their excuses private. Anyone can fork it, change Meep's personality, or swap in a different open model. Open tools let a small, silly idea like this exist without a cloud bill.
 
 ## My Agent Session
 
@@ -58,4 +56,4 @@ Slow and steady wins the race. Slow and *strategic* wins the snooze.
 
 ## Prize Categories
 
-**Best Use of Gemma.** Gemma 2 2B runs fully on-device through WebLLM and powers every one of Meep's negotiation replies.
+**Best Use of Gemma.** Gemma 4 (on Workers AI) and Gemma 2 2B (on-device via WebLLM) classify every excuse and write every one of Meep's negotiation replies.
