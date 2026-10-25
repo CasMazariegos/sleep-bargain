@@ -1,7 +1,7 @@
 {
-  "name": "snooze-negotiator",
+  "name": "sleep-bargain",
   "version": "0.1.0",
-  "description": "Meep Snooze Negotiator: bargain with your alarm. On-device Gemma via WebLLM.",
+  "description": "Sleep Bargain: bargain with your alarm. On-device Gemma via WebLLM.",
   "type": "module",
   "license": "MIT",
   "scripts": {

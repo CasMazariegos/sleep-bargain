@@ -1,4 +1,4 @@
-# 🐣 Meep Snooze Negotiator
+# 🐣 Sleep Bargain
 
 Don't hit snooze. **Negotiate.** Tell the alarm "5 more minutes, I was up late" and Meep, a tiny alarm creature powered by **Gemma running entirely in your browser**, bargains with you. It grants exactly as many minutes as your morning can afford, teases weak excuses, and makes counteroffers. Every deal goes in the **Snooze Ledger**.
 
@@ -13,7 +13,7 @@ Built for the DEV Hacktoberfest Open-Source AI Challenge, Week 3 ("Slow and Stea
 
 ## Run it (Windows PowerShell)
 ```powershell
-cd snooze-negotiator
+cd sleep-bargain
 npm.cmd install
 npm.cmd test        # unit tests for the time-budget logic
 npm.cmd run dev     # open the printed http://localhost:5173

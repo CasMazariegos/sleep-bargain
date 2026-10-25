@@ -10,7 +10,7 @@ tags: devchallenge, hf26challenge, gemma, opensource
 
 I'm a snoozer. A serial, unapologetic snoozer. The trouble is that the snooze button is dumb. It gives me 9 minutes whether I can afford them or not.
 
-So I built **Meep Snooze Negotiator**. When the alarm rings, you don't smash a button. You *bargain*. "5 more minutes, I was up late." Meep, a tiny sassy alarm creature, checks your morning and answers.
+So I built **Sleep Bargain**. When the alarm rings, you don't smash a button. You *bargain*. "5 more minutes, I was up late." Meep, a tiny sassy alarm creature, checks your morning and answers.
 
 If you can afford it, you get it. If your excuse is "my bed is cozy," Meep counteroffers. If you're already cutting it close, Meep says no, warmly but firmly. Every deal lands in a **Snooze Ledger**, so you can see how many minutes you won (and lost) this week.
 
@@ -20,7 +20,7 @@ If you can afford it, you get it. If your excuse is "my bed is cozy," Meep count
 
 ## Code
 
-<!-- TODO: {% github cassandra/snooze-negotiator %} -->
+<!-- TODO: {% github CasMazariegos/sleep-bargain %} -->
 
 ## How I Built It
 
