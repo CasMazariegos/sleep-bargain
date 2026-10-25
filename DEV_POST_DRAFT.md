@@ -24,13 +24,21 @@ If you can afford it, you get it. If your excuse is "my bed is cozy," Meep count
 
 ## How I Built It
 
-It's a tiny static site: plain JavaScript, Vite, and **WebLLM** running **Gemma 2 2B** right in the browser over WebGPU. No server, no API key, no account.
+It's a tiny static site: plain JavaScript, Vite, and **WebLLM** running **Gemma 2 2B** right in the browser over WebGPU. No server, no API key, no account. It's served as static assets on Cloudflare Workers.
 
-The most important design choice: **the model never picks the number.** The minutes come from plain code. Max snooze = time until you leave − getting-ready time − a safety buffer. A simple excuse score then decides if you get the full budget or a counteroffer. That logic has unit tests, because nobody should be late to work because an AI felt generous.
+The most important rule: **the model never picks the number.** Plain code does the minutes. Max snooze = time until you leave − getting-ready time − a safety buffer. That logic has unit tests, because nobody should be late to work because an AI felt generous.
 
-Gemma gets the deal that's already been decided and does what it's great at: personality. It writes Meep's reply, teases bad excuses, and makes the counteroffer sound fun. Then a small guardrail checks the reply, and if Gemma mentions any other number of minutes, it gets swapped for a safe line.
+Gemma gets two jobs instead.
 
-The alarm itself is just a browser timer, a Web Audio beep, and a notification. Lazy in the best way.
+**Job one: judge your excuse.** Gemma sorts it into a category (tired, sick, cold, weekend-ish, lame, or creative) and returns it as tiny JSON. The code turns that into a share of your budget. Sick gets almost all of it. "My bed is comfy" gets a fifth. If Gemma's JSON comes back weird, a keyword classifier steps in.
+
+**Job two: be Meep.** I gave Gemma a system prompt and a few example replies. Meep has to quote your actual excuse, mention your real leave time, and end with a clear verdict. Then a guardrail reads the reply. If Gemma mentions any minute count except the one the code decided, the reply gets tossed.
+
+Meep also has moods. She's generous on your first good excuse, suspicious by snooze two 🤨, fed up by snooze three 😤, and dramatic when there's no time left 😱. When you finally get up, she's triumphant 🏆.
+
+And you can **haggle**. Meep makes counteroffers with side quests: "I'll give you 6 if you skip the second episode of doom-scrolling." Tap *Accept deal*, *Counter*, or *Fine, I'm up*. She'll meet you halfway once. After that, she holds the line.
+
+No WebGPU? Meep still works with a bank of 70+ handwritten lines, sorted by mood and verdict, that fill in your excuse and your times. It's fun either way.
 
 ## Why Does Open Innovation Matter?
 

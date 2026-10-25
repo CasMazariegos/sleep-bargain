@@ -9,6 +9,9 @@ button{background:#ff7ab6;color:#1b1530;border:none;cursor:pointer;font-weight:6
 #chat{height:260px;overflow:auto;background:#120e22;border-radius:12px;padding:.6rem}
 .msg{margin:.3rem 0;padding:.4rem .6rem;border-radius:10px;max-width:85%}.me{background:#3a2f66;margin-left:auto}.meep{background:#ffe08a;color:#1b1530}
 small{opacity:.7}
+#moodbar{display:flex;gap:1rem;align-items:center;margin:.5rem 0}#mood{font-size:1.3rem;font-weight:700;text-transform:capitalize}
+#typing{color:#ffe08a;font-style:italic;margin:.3rem 0}#typing span{animation:b 1s infinite}#typing span:nth-child(2){animation-delay:.2s}#typing span:nth-child(3){animation-delay:.4s}
+@keyframes b{50%{opacity:.2}}#chips{margin:.5rem 0}#chips button{margin-right:.4rem;background:#8fe3cf}
 </style></head><body>
 <h1>🐣 Sleep Bargain</h1><small>Don't snooze. Negotiate. Gemma runs on your device.</small>
 <fieldset><legend>Your morning</legend>
@@ -17,7 +20,9 @@ Getting ready takes <input id="ready" type="number" value="35" style="width:4rem
 <button id="set">Set alarm</button> <button id="test">Ring now (demo)</button> <button id="up">I'm up!</button>
 <p id="status"></p></fieldset>
 <fieldset><legend>Model</legend><button id="load">Load Gemma (≈1.5 GB, once)</button> <small id="model">Not loaded: Meep uses built-in lines.</small></fieldset>
-<div id="chat"></div>
+<div id="moodbar">Meep is feeling: <span id="mood">🐣</span> <small id="cat"></small></div>
+<div id="chat"></div><div id="typing" hidden>Meep is typing<span>.</span><span>.</span><span>.</span></div>
+<div id="chips" hidden><button id="chipAccept">✅ Accept deal</button><button id="chipCounter">🤝 Counter</button><button id="chipReject">❌ No deal</button><button id="chipUp">☀️ Fine, I'm up</button></div>
 <form id="form"><input id="excuse" placeholder="5 more minutes, I was up late..." style="width:75%"> <button>Bargain</button></form>
 <fieldset><legend>Snooze ledger</legend><b id="totals"></b><ul id="ledger"></ul></fieldset>
 <script type="module" src="/src/main.js"></script>
