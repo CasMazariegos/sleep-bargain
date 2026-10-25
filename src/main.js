@@ -95,9 +95,9 @@ $('set').onclick = () => {
   catch (e) { $('status').textContent = e.message; }
 };
 $('test').onclick = () => { try { syncLeave(Math.floor(nowMin())); } catch {} ring(); };
-$('up').onclick = $('chipUp').onclick = () => { say('me', "Fine, I'm up."); send('up'); };
-$('chipAccept').onclick = () => { if (!pending) return; say('me', `Deal${pending.quest ? `, I'll ${pending.quest}` : ''}.`); send('accept'); };
-$('chipReject').onclick = () => { say('me', 'No deal.'); send('reject'); };
+$('up').onclick = $('chipUp').onclick = () => { say('me', "Fine, I'm up."); send('up', "Fine, I'm up."); };
+$('chipAccept').onclick = () => { if (!pending) return; const t = `Deal${pending.quest ? `, I'll ${pending.quest}` : ''}.`; say('me', t); send('accept', t); };
+$('chipReject').onclick = () => { say('me', 'No deal.'); send('reject', 'No deal.'); };
 $('chipCounter').onclick = () => { $('excuse').value = `How about ${(pending?.granted ?? 2) + 3} minutes?`; $('excuse').focus(); };
 $('brainToggle').onchange = async (e) => {
   if (!e.target.checked) { mode = 'server'; setBrain('gemma-server'); return; }

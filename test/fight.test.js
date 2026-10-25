@@ -108,3 +108,11 @@ test('rate limit kicks in', () => {
   for (let i = 0; i < 40; i++) limited = rateLimited('9.9.9.9', 1000 + i);
   assert.equal(limited, true);
 });
+
+test('haggle replies may echo the ask and old offer but must state the new number', async () => {
+  const { guard } = await import('../src/prompt.js');
+  const ctx = { untilLeave: 70, also: [9, 6] };
+  assert.ok(guard('9 minutes? Cute. I said 6 minutes, so meet me at 7 minutes.', 7, ctx));
+  assert.equal(guard('Fine, 9 minutes.', 7, ctx), null);
+  assert.equal(guard('12 minutes, sure.', 7, ctx), null);
+});

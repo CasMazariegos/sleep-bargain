@@ -61,7 +61,8 @@ export async function turn(raw, deps = {}) {
   let reply = null, brain = 'fallback';
   try {
     const t = await deps.talk?.(out);
-    reply = guard(t, out.granted, { untilLeave: budget.untilLeave });
+    const haggle = ['countered', 'holding', 'deal'].includes(out.verdict);
+    reply = guard(t, out.granted, { untilLeave: budget.untilLeave, also: haggle ? [out.requested, inp.pending?.granted] : [] });
     if (reply) brain = deps.brain ?? 'model';
   } catch { /* fallback */ }
   if (!reply) {

@@ -16,7 +16,27 @@ If you can afford it, you get it. If your excuse is "my bed is cozy," Meep count
 
 ## Demo
 
-<!-- TODO: deployed link + GIF/video of a ring → negotiate → counteroffer -->
+<!-- NOTE: Image paths below are local placeholders. Upload each file from screenshots/ via the DEV editor's image upload, then replace the path with the DEV-hosted URL. -->
+
+Try it: https://sleep-bargain.casmazariegos.workers.dev
+
+![A full snooze negotiation with Meep on a phone: ring, excuse, counteroffer, haggle, deal, final refusal](screenshots/full-negotiation-mobile.gif)
+
+![Sleep Bargain setup on a phone: alarm 7:00 am, leave by 8:15 am, 35 minutes to get ready, 5 minute buffer, Gemma 4 on Workers AI as the brain](screenshots/01-setup-mobile.png)
+
+![The alarm ringing: Meep, feeling sassy, says "WAKE UP! Want more sleep? Make your case."](screenshots/02-alarm-ringing-mobile.png)
+
+![Meep's first counteroffer: 6 minutes instead of 10, if I drink a full glass of water first, with Accept / Counter / No deal / Fine, I'm up chips](screenshots/03-first-counteroffer-mobile.png)
+
+![Haggling: I ask for 9 minutes and Meep settles on 7](screenshots/04-haggle-mobile.png)
+
+![Snooze 3: an exasperated Meep makes a 2 minute final offer if I turn the bedroom light on](screenshots/05a-final-offer-mobile.png)
+
+![Snooze 4: a dramatic Meep refuses with zero minutes and rings again](screenshots/05-final-refusal-mobile.png)
+
+![The Snooze Ledger: minutes won and lost, with each ask, grant and side quest](screenshots/06-snooze-ledger-mobile.png)
+
+![Desktop view of Sleep Bargain mid-negotiation](screenshots/07-desktop-overview.png)
 
 ## Code
 

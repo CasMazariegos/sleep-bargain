@@ -37,7 +37,7 @@ Answer as JSON like {"category":"tired"} and nothing else.`;
 
 /** Guardrail: every "N min" must be the granted number (or the real minutes-until-leave). */
 export function guard(text, granted, ctx = {}) {
-  const allowed = new Set([granted, ctx.untilLeave].filter((n) => n !== undefined));
+  const allowed = new Set([granted, ctx.untilLeave, ...(ctx.also ?? [])].filter((n) => n !== undefined));
   let t = String(text ?? '').trim();
   if (/^"[^"]*"$/.test(t)) t = t.slice(1, -1).trim();
   const nums = [...t.matchAll(/(\d+)\s*(?:more\s*|extra\s*)?(?:min|minute)/gi)].map((m) => Number(m[1]));
