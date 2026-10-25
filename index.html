@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meep Snooze Negotiator</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem;background:#1b1530;color:#f4ecff}
+h1{margin:.2rem 0}fieldset{border:1px solid #5b4b8a;border-radius:12px;margin:1rem 0}
+input,button{font:inherit;padding:.4rem .6rem;border-radius:8px;border:1px solid #6d5ca8;background:#2a2148;color:inherit}
+button{background:#ff7ab6;color:#1b1530;border:none;cursor:pointer;font-weight:600}
+#chat{height:260px;overflow:auto;background:#120e22;border-radius:12px;padding:.6rem}
+.msg{margin:.3rem 0;padding:.4rem .6rem;border-radius:10px;max-width:85%}.me{background:#3a2f66;margin-left:auto}.meep{background:#ffe08a;color:#1b1530}
+small{opacity:.7}
+</style></head><body>
+<h1>🐣 Meep Snooze Negotiator</h1><small>Don't snooze. Negotiate. Gemma runs on your device.</small>
+<fieldset><legend>Your morning</legend>
+Alarm <input id="alarm" value="7:00 am" size="8"> Leave by <input id="leave" value="8:15 am" size="8"><br><br>
+Getting ready takes <input id="ready" type="number" value="35" style="width:4rem"> min · buffer <input id="buffer" type="number" value="5" style="width:4rem"> min<br><br>
+<button id="set">Set alarm</button> <button id="test">Ring now (demo)</button> <button id="up">I'm up!</button>
+<p id="status"></p></fieldset>
+<fieldset><legend>Model</legend><button id="load">Load Gemma (≈1.5 GB, once)</button> <small id="model">Not loaded: Meep uses built-in lines.</small></fieldset>
+<div id="chat"></div>
+<form id="form"><input id="excuse" placeholder="5 more minutes, I was up late..." style="width:75%"> <button>Bargain</button></form>
+<fieldset><legend>Snooze ledger</legend><b id="totals"></b><ul id="ledger"></ul></fieldset>
+<script type="module" src="/src/main.js"></script>
+</body></html>
